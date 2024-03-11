@@ -1,11 +1,16 @@
+
+"use client"
 import BlogCard from "@/components/ui/BlogCard";
+import { useGetBlogsQuery } from "@/redux/api/baseApi";
 import { BlogPost } from "@/types";
 
-const BlogsPage = async() => {
-    const res = await fetch("http://localhost:5000/blogs", {
-        cache: "no-store"
-    });
-      const blogs = await res.json();
+const BlogsPage = () => {
+    // const res = await fetch("http://localhost:5000/blogs", {
+    //     cache: "no-store"
+    // });
+    //   const blogs = await res.json();
+      const {data:blogs, isLoading, isError, error} = useGetBlogsQuery("");
+    //   console.log(blogs)
       console.log(blogs)
     return (
         <div className="w-[90%] mx-auto">
@@ -15,7 +20,7 @@ const BlogsPage = async() => {
                 Dive into the fascinating world of quantum computing, where unlocking unprecedented computational power.</i></p>
         </div>
         <div className="grid grid-cols-3 gap-5 mt-7">
-                {blogs.map((blog : BlogPost) => <BlogCard key={blog.id} blog={blog} />)}
+                {blogs?.map((blog : BlogPost) => <BlogCard key={blog.id} blog={blog} />)}
         </div>
         </div>
     );
